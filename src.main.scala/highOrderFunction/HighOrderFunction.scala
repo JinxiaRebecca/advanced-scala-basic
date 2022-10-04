@@ -1,5 +1,7 @@
 package highOrderFunction
 
+import scala.annotation.tailrec
+
 object HighOrderFunction extends App {
 
   def f(num: Int): Int = {
@@ -40,4 +42,41 @@ object HighOrderFunction extends App {
     f8 _
   }
 
+  def func(i: Int): String => Char => Boolean = {
+    def f1(s: String): Char => Boolean = {
+      def f2(c: Char): Boolean = {
+        if (i == 0 && s == "" && c == '0') false else true
+      }
+
+      f2
+    }
+
+    f1
+  }
+
+  def func1(i: Int): String => Char => Boolean = {
+    s => c => if (i == 0 && s == "" && c == '0') false else true
+  }
+
+  //  柯里化
+  def func2(i: Int)(s: String)(c: Char): Boolean = {
+    if (i == 0 && s == "" && c == '0') false else true
+  }
+
+  def addCurry(a: Int)(b: Int): Int = a + b
+
+  def recursion(a: Int): Int = {
+    if (a == 0) return 1
+    recursion(a - 1) * a
+  }
+
+  //尾递归
+  def tailFact(n: Int): Int = {
+    @tailrec
+    def loop(n: Int, result: Int): Int = {
+      if (n == 0) return result
+      loop(n - 1, result * n)
+    }
+    loop(n, 1)
+  }
 }
